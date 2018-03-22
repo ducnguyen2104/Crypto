@@ -60,6 +60,17 @@ public class Frame1 extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
+        folderPanel1 = new javax.swing.JPanel();
+        btnClear3 = new javax.swing.JButton();
+        btnStart3 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        comboCryptType3 = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField9 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(javax.swing.UIManager.getDefaults().getColor("Nb.Desktop.background"));
@@ -267,7 +278,6 @@ public class Frame1 extends javax.swing.JFrame {
 
         buttonGroup2.add(radioEncrypt2);
         radioEncrypt2.setForeground(new java.awt.Color(255, 255, 255));
-        radioEncrypt2.setSelected(true);
         radioEncrypt2.setText("Encrypt");
         radioEncrypt2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -388,6 +398,116 @@ public class Frame1 extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Folder", folderPanel);
 
+        folderPanel1.setBackground(new java.awt.Color(33, 120, 255));
+        folderPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        btnClear3.setBackground(new java.awt.Color(29, 155, 236));
+        btnClear3.setForeground(new java.awt.Color(255, 255, 255));
+        btnClear3.setText("CLEAR");
+        btnClear3.setToolTipText("");
+        btnClear3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClear3ActionPerformed(evt);
+            }
+        });
+
+        btnStart3.setBackground(new java.awt.Color(29, 155, 236));
+        btnStart3.setForeground(new java.awt.Color(255, 255, 255));
+        btnStart3.setText("START");
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Original file");
+
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Cryptography type");
+
+        comboCryptType3.setForeground(new java.awt.Color(255, 255, 255));
+        comboCryptType3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "Caesar" }));
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Key file");
+
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Encrypted file");
+
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout folderPanel1Layout = new javax.swing.GroupLayout(folderPanel1);
+        folderPanel1.setLayout(folderPanel1Layout);
+        folderPanel1Layout.setHorizontalGroup(
+            folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(folderPanel1Layout.createSequentialGroup()
+                .addGroup(folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(folderPanel1Layout.createSequentialGroup()
+                        .addGroup(folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(folderPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel10))
+                            .addGroup(folderPanel1Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(btnClear3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnStart3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 30, Short.MAX_VALUE))
+                    .addGroup(folderPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(comboCryptType3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField9)
+                            .addGroup(folderPanel1Layout.createSequentialGroup()
+                                .addGroup(folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel13))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        folderPanel1Layout.setVerticalGroup(
+            folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, folderPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboCryptType3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addGroup(folderPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClear3)
+                    .addComponent(btnStart3))
+                .addGap(34, 34, 34))
+        );
+
+        jTabbedPane1.addTab("Check integrity", folderPanel1);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -467,6 +587,22 @@ public class Frame1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
 
+    private void btnClear3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClear3ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -505,15 +641,23 @@ public class Frame1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear1;
     private javax.swing.JButton btnClear2;
+    private javax.swing.JButton btnClear3;
     private javax.swing.JButton btnStart1;
     private javax.swing.JButton btnStart2;
+    private javax.swing.JButton btnStart3;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> comboCryptType1;
     private javax.swing.JComboBox<String> comboCryptType2;
+    private javax.swing.JComboBox<String> comboCryptType3;
     private javax.swing.JPanel filePanel;
     private javax.swing.JPanel folderPanel;
+    private javax.swing.JPanel folderPanel1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -532,6 +676,9 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JRadioButton radioDecrypt1;
     private javax.swing.JRadioButton radioDecrypt2;
     private javax.swing.JRadioButton radioEncrypt1;
