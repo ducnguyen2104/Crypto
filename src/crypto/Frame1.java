@@ -21,7 +21,21 @@ public class Frame1 extends javax.swing.JFrame {
     public Frame1() {
         initComponents();
     }
-
+    
+    /**
+     * Variables
+     */
+    public JFileChooser chooseFile = new JFileChooser();
+    public JFileChooser chooseDirectory = new JFileChooser();
+    public File inputFile;
+    public String inputFilePath;
+    public File key;
+    public String keyPath;
+    public File encryptedFile;
+    public String encryptedFilePath;
+    public File resultFolder;
+    public String resultFolderPath;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,14 +89,9 @@ public class Frame1 extends javax.swing.JFrame {
         btnStart3 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtOriginalFilePath = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        comboCryptType3 = new javax.swing.JComboBox<>();
-        jLabel12 = new javax.swing.JLabel();
-        txtKeyPath3 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtEncryptedFilePath = new javax.swing.JTextField();
         btnOriginalFile = new javax.swing.JButton();
-        btnKey3 = new javax.swing.JButton();
         btnEncryptedFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -272,28 +281,28 @@ public class Frame1 extends javax.swing.JFrame {
                         .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboCryptType1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(filePanelLayout.createSequentialGroup()
-                                .addComponent(txtFilePath1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(filePanelLayout.createSequentialGroup()
-                                .addComponent(txtResultFolder1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnResultFolder1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(filePanelLayout.createSequentialGroup()
-                                .addComponent(txtKeyPath1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnKey1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(filePanelLayout.createSequentialGroup()
-                                .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(filePanelLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(radioEncrypt1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radioDecrypt1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(radioDecrypt1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(filePanelLayout.createSequentialGroup()
+                                .addGroup(filePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(filePanelLayout.createSequentialGroup()
+                                        .addComponent(txtFilePath1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(filePanelLayout.createSequentialGroup()
+                                        .addComponent(txtResultFolder1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnResultFolder1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(filePanelLayout.createSequentialGroup()
+                                        .addComponent(txtKeyPath1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnKey1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         filePanelLayout.setVerticalGroup(
@@ -562,25 +571,6 @@ public class Frame1 extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Cryptography type");
-
-        comboCryptType3.setForeground(new java.awt.Color(255, 255, 255));
-        comboCryptType3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "Caesar" }));
-
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Key file");
-
-        txtKeyPath3.setBackground(new java.awt.Color(143, 218, 238));
-        txtKeyPath3.setMaximumSize(new java.awt.Dimension(234, 27));
-        txtKeyPath3.setMinimumSize(new java.awt.Dimension(234, 27));
-        txtKeyPath3.setPreferredSize(new java.awt.Dimension(234, 27));
-        txtKeyPath3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKeyPath3ActionPerformed(evt);
-            }
-        });
-
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Encrypted file");
 
@@ -605,17 +595,6 @@ public class Frame1 extends javax.swing.JFrame {
             }
         });
 
-        btnKey3.setBackground(new java.awt.Color(29, 155, 236));
-        btnKey3.setForeground(new java.awt.Color(255, 255, 255));
-        btnKey3.setText("+");
-        btnKey3.setMaximumSize(new java.awt.Dimension(41, 27));
-        btnKey3.setMinimumSize(new java.awt.Dimension(41, 27));
-        btnKey3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKey3ActionPerformed(evt);
-            }
-        });
-
         btnEncryptedFile.setBackground(new java.awt.Color(29, 155, 236));
         btnEncryptedFile.setForeground(new java.awt.Color(255, 255, 255));
         btnEncryptedFile.setText("+");
@@ -634,67 +613,48 @@ public class Frame1 extends javax.swing.JFrame {
             .addGroup(checkPanelLayout.createSequentialGroup()
                 .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(checkPanelLayout.createSequentialGroup()
-                        .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(checkPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel10))
-                            .addGroup(checkPanelLayout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(btnClear3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnStart3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(checkPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboCryptType3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(checkPanelLayout.createSequentialGroup()
-                                .addComponent(txtKeyPath3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEncryptedFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnKey3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(checkPanelLayout.createSequentialGroup()
-                                    .addComponent(txtEncryptedFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnEncryptedFile, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(checkPanelLayout.createSequentialGroup()
-                                    .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jLabel12)
-                                        .addComponent(jLabel13)
-                                        .addGroup(checkPanelLayout.createSequentialGroup()
-                                            .addComponent(txtOriginalFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btnOriginalFile, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addComponent(btnEncryptedFile, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(checkPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(checkPanelLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(btnClear3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnStart3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(checkPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(checkPanelLayout.createSequentialGroup()
+                        .addComponent(txtOriginalFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOriginalFile, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         checkPanelLayout.setVerticalGroup(
             checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, checkPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(89, 89, 89)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtOriginalFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOriginalFile, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboCryptType3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtKeyPath3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKey3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEncryptedFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEncryptedFile, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                 .addGroup(checkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClear3)
                     .addComponent(btnStart3))
@@ -767,20 +727,15 @@ public class Frame1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOriginalFilePathActionPerformed
 
-    private void txtKeyPath3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKeyPath3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtKeyPath3ActionPerformed
-
     private void txtEncryptedFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEncryptedFilePathActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEncryptedFilePathActionPerformed
 
     private void btnFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFile1ActionPerformed
-        JFileChooser chooseFile1 = new JFileChooser();
-        chooseFile1.showOpenDialog(null);
-        File file1 = chooseFile1.getSelectedFile();
-        String fileName1 = file1.getPath();
-        txtFilePath1.setText(fileName1);
+        chooseFile.showOpenDialog(null);
+        inputFile = chooseFile.getSelectedFile();
+        inputFilePath = inputFile.getPath();
+        txtFilePath1.setText(inputFilePath);
     }//GEN-LAST:event_btnFile1ActionPerformed
 
     private void txtResultFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResultFolder1ActionPerformed
@@ -808,70 +763,55 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
-        JFileChooser chooseKey1 = new JFileChooser();
-        chooseKey1.showOpenDialog(null);
-        File key1 = chooseKey1.getSelectedFile();
-        String keyName1 = key1.getPath();
-        txtKeyPath1.setText(keyName1);
+        chooseFile.showOpenDialog(null);
+        key = chooseFile.getSelectedFile();
+        keyPath = key.getPath();
+        txtKeyPath1.setText(keyPath);
     }//GEN-LAST:event_btnKey1ActionPerformed
 
     private void btnResultFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultFolder1ActionPerformed
-        JFileChooser chooseResultFolder1 = new JFileChooser();
-        chooseResultFolder1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooseResultFolder1.showOpenDialog(null);
-        File resultFolder1 = chooseResultFolder1.getSelectedFile();
-        String resultFolderName1 = resultFolder1.getPath();
-        txtResultFolder1.setText(resultFolderName1);
+        chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooseDirectory.showOpenDialog(null);
+        resultFolder = chooseDirectory.getSelectedFile();
+        resultFolderPath = resultFolder.getPath();
+        txtResultFolder1.setText(resultFolderPath);
     }//GEN-LAST:event_btnResultFolder1ActionPerformed
 
     private void btnFile2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFile2ActionPerformed
-        JFileChooser chooseFile2 = new JFileChooser();
-        chooseFile2.showOpenDialog(null);
-        File file2 = chooseFile2.getSelectedFile();
-        String fileName2 = file2.getPath();
-        txtFilePath2.setText(fileName2);
+        chooseFile.showOpenDialog(null);
+        inputFile = chooseFile.getSelectedFile();
+        inputFilePath = inputFile.getPath();
+        txtFilePath2.setText(inputFilePath);
     }//GEN-LAST:event_btnFile2ActionPerformed
 
     private void btnKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey2ActionPerformed
-        JFileChooser chooseKey2 = new JFileChooser();
-        chooseKey2.showOpenDialog(null);
-        File key2 = chooseKey2.getSelectedFile();
-        String keyName2 = key2.getPath();
-        txtKeyPath2.setText(keyName2);
+        chooseFile.showOpenDialog(null);
+        key = chooseFile.getSelectedFile();
+        keyPath = key.getPath();
+        txtKeyPath2.setText(keyPath);
     }//GEN-LAST:event_btnKey2ActionPerformed
 
     private void btnResultFolder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultFolder2ActionPerformed
-        JFileChooser chooseResultFolder2 = new JFileChooser();
-        chooseResultFolder2.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooseResultFolder2.showOpenDialog(null);
-        File resultFolder2 = chooseResultFolder2.getSelectedFile();
-        String resultFolderName2 = resultFolder2.getPath();
-        txtResultFolder2.setText(resultFolderName2);
+        chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooseDirectory.showOpenDialog(null);
+        resultFolder = chooseDirectory.getSelectedFile();
+        resultFolderPath = resultFolder.getPath();
+        txtResultFolder2.setText(resultFolderPath);
     }//GEN-LAST:event_btnResultFolder2ActionPerformed
 
     private void btnOriginalFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOriginalFileActionPerformed
-        JFileChooser chooseOriginalFile = new JFileChooser();
-        chooseOriginalFile.showOpenDialog(null);
-        File originalFile = chooseOriginalFile.getSelectedFile();
-        String originalFileName = originalFile.getPath();
-        txtOriginalFilePath.setText(originalFileName);
+        chooseFile.showOpenDialog(null);
+        inputFile = chooseFile.getSelectedFile();
+        inputFilePath = inputFile.getPath();
+        txtOriginalFilePath.setText(inputFilePath);
     }//GEN-LAST:event_btnOriginalFileActionPerformed
 
     private void btnEncryptedFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptedFileActionPerformed
-        JFileChooser chooseEncryptedFile = new JFileChooser();
-        chooseEncryptedFile.showOpenDialog(null);
-        File encryptedFile = chooseEncryptedFile.getSelectedFile();
-        String encryptedFileName = encryptedFile.getPath();
-        txtEncryptedFilePath.setText(encryptedFileName);
+        chooseFile.showOpenDialog(null);
+        encryptedFile = chooseFile.getSelectedFile();
+        encryptedFilePath = encryptedFile.getPath();
+        txtEncryptedFilePath.setText(encryptedFilePath);
     }//GEN-LAST:event_btnEncryptedFileActionPerformed
-
-    private void btnKey3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey3ActionPerformed
-        JFileChooser chooseKey3 = new JFileChooser();
-        chooseKey3.showOpenDialog(null);
-        File key3 = chooseKey3.getSelectedFile();
-        String keyName3 = key3.getPath();
-        txtKeyPath3.setText(keyName3);
-    }//GEN-LAST:event_btnKey3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -917,7 +857,6 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JButton btnFile2;
     private javax.swing.JButton btnKey1;
     private javax.swing.JButton btnKey2;
-    private javax.swing.JButton btnKey3;
     private javax.swing.JButton btnOriginalFile;
     private javax.swing.JButton btnResultFolder1;
     private javax.swing.JButton btnResultFolder2;
@@ -929,13 +868,10 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JPanel checkPanel;
     private javax.swing.JComboBox<String> comboCryptType1;
     private javax.swing.JComboBox<String> comboCryptType2;
-    private javax.swing.JComboBox<String> comboCryptType3;
     private javax.swing.JPanel filePanel;
     private javax.swing.JPanel folderPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -958,7 +894,6 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JTextField txtFilePath2;
     private javax.swing.JTextField txtKeyPath1;
     private javax.swing.JTextField txtKeyPath2;
-    private javax.swing.JTextField txtKeyPath3;
     private javax.swing.JTextField txtOriginalFilePath;
     private javax.swing.JTextField txtResultFolder1;
     private javax.swing.JTextField txtResultFolder2;
