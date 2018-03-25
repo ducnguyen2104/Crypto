@@ -758,16 +758,12 @@ public class Frame1 extends javax.swing.JFrame {
     private void btnFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFile1ActionPerformed
         boolean hasSet = !"".equals(txtFilePath1.getText());
         chooseFile.showOpenDialog(null);
-        try {
-            inputFile = chooseFile.getSelectedFile();
-            inputFilePath = inputFile.getPath();
-            txtFilePath1.setText(inputFilePath);
-            //Done 15% progress
-            if (!hasSet) jProgressBar1.setValue(jProgressBar1.getValue()+15);
-	} 
-        catch (NullPointerException e) {
-            txtFilePath1.setText("No file selected");
-        }
+        inputFile = chooseFile.getSelectedFile();
+        inputFilePath = inputFile.getPath();
+        txtFilePath1.setText(inputFilePath);
+        //Done 15% progress
+        System.out.println(hasSet);
+        if (!hasSet) jProgressBar1.setValue(jProgressBar1.getValue()+15);
     }//GEN-LAST:event_btnFile1ActionPerformed
 
     private void txtResultFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResultFolder1ActionPerformed
@@ -796,93 +792,57 @@ public class Frame1 extends javax.swing.JFrame {
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
         chooseFile.showOpenDialog(null);
-        try {
-            key = chooseFile.getSelectedFile();
-            keyPath = key.getPath();
-            txtKeyPath1.setText(keyPath);
+        key = chooseFile.getSelectedFile();
+        keyPath = key.getPath();
+        txtKeyPath1.setText(keyPath);
         //Done 15% progress
         jProgressBar1.setValue(jProgressBar1.getValue()+15);
-        }
-        catch(NullPointerException e) {
-            txtKeyPath1.setText("No key selected");
-        }
     }//GEN-LAST:event_btnKey1ActionPerformed
 
     private void btnResultFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultFolder1ActionPerformed
         chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooseDirectory.showOpenDialog(null);
-        try {
-            resultFolder = chooseDirectory.getSelectedFile();
-            resultFolderPath = resultFolder.getPath();
-            txtResultFolder1.setText(resultFolderPath);
+        resultFolder = chooseDirectory.getSelectedFile();
+        resultFolderPath = resultFolder.getPath();
+        txtResultFolder1.setText(resultFolderPath);
         //Done 15% progress
         jProgressBar1.setValue(jProgressBar1.getValue()+15);
-        }
-        catch (NullPointerException e) { 
-            txtResultFolder1.setText("No folder selected");
-        }
     }//GEN-LAST:event_btnResultFolder1ActionPerformed
 
     private void btnFile2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFile2ActionPerformed
-        chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooseDirectory.showOpenDialog(null);
-        try {
-            inputFile = chooseDirectory.getSelectedFile();
-            inputFilePath = inputFile.getPath();
-            txtFilePath2.setText(inputFilePath);
-        } 
-        catch (NullPointerException e) {
-            txtFilePath2.setText("No folder selected");
-        }
+        chooseFile.showOpenDialog(null);
+        inputFile = chooseFile.getSelectedFile();
+        inputFilePath = inputFile.getPath();
+        txtFilePath2.setText(inputFilePath);
     }//GEN-LAST:event_btnFile2ActionPerformed
 
     private void btnKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey2ActionPerformed
         chooseFile.showOpenDialog(null);
-        try {
-            key = chooseFile.getSelectedFile();
-            keyPath = key.getPath();
-            txtKeyPath2.setText(keyPath);
-        } 
-        catch (NullPointerException e) {
-            txtKeyPath2.setText("No key selected");
-        }
+        key = chooseFile.getSelectedFile();
+        keyPath = key.getPath();
+        txtKeyPath2.setText(keyPath);
     }//GEN-LAST:event_btnKey2ActionPerformed
 
     private void btnResultFolder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultFolder2ActionPerformed
         chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooseDirectory.showOpenDialog(null);
-        try {
-            resultFolder = chooseDirectory.getSelectedFile();
-            resultFolderPath = resultFolder.getPath();
-            txtResultFolder2.setText(resultFolderPath);
-        } 
-        catch (NullPointerException e) {
-            txtResultFolder2.setText("No folder selected");
-        }
+        resultFolder = chooseDirectory.getSelectedFile();
+        resultFolderPath = resultFolder.getPath();
+        txtResultFolder2.setText(resultFolderPath);
     }//GEN-LAST:event_btnResultFolder2ActionPerformed
 
     private void btnOriginalFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOriginalFileActionPerformed
         chooseFile.showOpenDialog(null);
-        try {
-            inputFile = chooseFile.getSelectedFile();
-            inputFilePath = inputFile.getPath();
-            txtOriginalFilePath.setText(inputFilePath);
-        } 
-        catch (NullPointerException e) {
-            txtOriginalFilePath.setText("No file selected");
-        }
+        inputFile = chooseFile.getSelectedFile();
+        inputFilePath = inputFile.getPath();
+        txtOriginalFilePath.setText(inputFilePath);
     }//GEN-LAST:event_btnOriginalFileActionPerformed
 
     private void btnEncryptedFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncryptedFileActionPerformed
         chooseFile.showOpenDialog(null);
-        try {
-            encryptedFile = chooseFile.getSelectedFile();
-            encryptedFilePath = encryptedFile.getPath();
-            txtEncryptedFilePath.setText(encryptedFilePath);
-        } 
-        catch (NullPointerException e) {
-            txtEncryptedFilePath.setText("No file selected");
-        }
+        encryptedFile = chooseFile.getSelectedFile();
+        encryptedFilePath = encryptedFile.getPath();
+        txtEncryptedFilePath.setText(encryptedFilePath);
     }//GEN-LAST:event_btnEncryptedFileActionPerformed
 
     private void btnStart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart1ActionPerformed
@@ -966,9 +926,7 @@ public class Frame1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Frame1 frame = new Frame1();
-                frame.setVisible(true);
-                
+                new Frame1().setVisible(true);
             }
         });
     }
