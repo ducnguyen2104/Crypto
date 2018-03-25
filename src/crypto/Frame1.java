@@ -5,9 +5,21 @@
  */
 package crypto;
 
+
+import java.awt.Component;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.ImageCursor;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -32,9 +44,11 @@ public class Frame1 extends javax.swing.JFrame {
     public File key;
     public String keyPath;
     public File encryptedFile;
+    public File decryptedFile;
     public String encryptedFilePath;
     public File resultFolder;
     public String resultFolderPath;
+    private Component frame;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +117,7 @@ public class Frame1 extends javax.swing.JFrame {
 
         jProgressBar1.setBackground(new java.awt.Color(33, 120, 255));
         jProgressBar1.setForeground(new java.awt.Color(33, 120, 255));
-        jProgressBar1.setValue(50);
+        jProgressBar1.setStringPainted(true);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
@@ -125,8 +139,8 @@ public class Frame1 extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(210, 210, 210)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(204, 204, 204)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -156,6 +170,11 @@ public class Frame1 extends javax.swing.JFrame {
         btnStart1.setBackground(new java.awt.Color(29, 155, 236));
         btnStart1.setForeground(new java.awt.Color(255, 255, 255));
         btnStart1.setText("START");
+        btnStart1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStart1ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(radioEncrypt1);
         radioEncrypt1.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,8 +213,13 @@ public class Frame1 extends javax.swing.JFrame {
 
         comboCryptType1.setBackground(new java.awt.Color(29, 155, 236));
         comboCryptType1.setForeground(new java.awt.Color(255, 255, 255));
-        comboCryptType1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "Caesar" }));
+        comboCryptType1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "AES" }));
         comboCryptType1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        comboCryptType1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCryptType1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Key file");
@@ -396,7 +420,7 @@ public class Frame1 extends javax.swing.JFrame {
         jLabel7.setText("Cryptography type");
 
         comboCryptType2.setForeground(new java.awt.Color(255, 255, 255));
-        comboCryptType2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "Caesar" }));
+        comboCryptType2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "AES" }));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Key file");
@@ -732,10 +756,14 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEncryptedFilePathActionPerformed
 
     private void btnFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFile1ActionPerformed
+        boolean hasSet = !"".equals(txtFilePath1.getText());
         chooseFile.showOpenDialog(null);
         inputFile = chooseFile.getSelectedFile();
         inputFilePath = inputFile.getPath();
         txtFilePath1.setText(inputFilePath);
+        //Done 15% progress
+        System.out.println(hasSet);
+        if (!hasSet) jProgressBar1.setValue(jProgressBar1.getValue()+15);
     }//GEN-LAST:event_btnFile1ActionPerformed
 
     private void txtResultFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResultFolder1ActionPerformed
@@ -767,6 +795,8 @@ public class Frame1 extends javax.swing.JFrame {
         key = chooseFile.getSelectedFile();
         keyPath = key.getPath();
         txtKeyPath1.setText(keyPath);
+        //Done 15% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+15);
     }//GEN-LAST:event_btnKey1ActionPerformed
 
     private void btnResultFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultFolder1ActionPerformed
@@ -775,6 +805,8 @@ public class Frame1 extends javax.swing.JFrame {
         resultFolder = chooseDirectory.getSelectedFile();
         resultFolderPath = resultFolder.getPath();
         txtResultFolder1.setText(resultFolderPath);
+        //Done 15% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+15);
     }//GEN-LAST:event_btnResultFolder1ActionPerformed
 
     private void btnFile2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFile2ActionPerformed
@@ -813,6 +845,61 @@ public class Frame1 extends javax.swing.JFrame {
         txtEncryptedFilePath.setText(encryptedFilePath);
     }//GEN-LAST:event_btnEncryptedFileActionPerformed
 
+    private void btnStart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart1ActionPerformed
+        // TODO add your handling code here:
+        //Done 50% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+5);
+        //Get some informations about algorithm, key and file
+        String algorithm = comboCryptType1.getSelectedItem().toString();
+        String filePath = txtFilePath1.getText();
+        String keyPath = txtKeyPath1.getText();
+        String resultFolderPath = txtResultFolder1.getText();
+        String key = "";
+        //Read input file
+        try {
+            if ("".equals(filePath)) throw new Exception();
+            inputFile = new File(filePath);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(frame, "Can't read input file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        //Done 60% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //Read key file
+        try {  
+            key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+        } catch(FileNotFoundException e) {
+            JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        //Done 70% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //Make output file
+        try {
+            encryptedFile = new File(resultFolderPath+"\\"+inputFile.getName()+".encrypted");
+            decryptedFile = new File(resultFolderPath+"\\"+inputFile.getName()+".decrypted");
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        //Done 80% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //Do encrypt/decrypt
+        if (radioEncrypt1.isSelected() && "DES".equals(algorithm)) try {
+            DES.encrypt(key, inputFile, encryptedFile);
+        } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        else if (radioDecrypt1.isSelected() && "DES".equals(algorithm)) try {
+            DES.decrypt(key, inputFile, decryptedFile);
+        } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Finish 100% progress
+        jProgressBar1.setValue(jProgressBar1.getValue()+20);
+    }//GEN-LAST:event_btnStart1ActionPerformed
+
+    private void comboCryptType1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCryptType1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCryptType1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -829,15 +916,11 @@ public class Frame1 extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
