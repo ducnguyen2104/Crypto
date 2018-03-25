@@ -117,7 +117,9 @@ public class Frame1 extends javax.swing.JFrame {
 
         jProgressBar1.setBackground(new java.awt.Color(33, 120, 255));
         jProgressBar1.setForeground(new java.awt.Color(33, 120, 255));
-        jProgressBar1.setStringPainted(true);
+        jProgressBar1.setMaximumSize(new java.awt.Dimension(580, 17));
+        jProgressBar1.setMinimumSize(new java.awt.Dimension(580, 17));
+        jProgressBar1.setPreferredSize(new java.awt.Dimension(580, 17));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
@@ -131,8 +133,8 @@ public class Frame1 extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -140,7 +142,7 @@ public class Frame1 extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(204, 204, 204)
+                .addGap(207, 207, 207)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -383,6 +385,11 @@ public class Frame1 extends javax.swing.JFrame {
         btnStart2.setBackground(new java.awt.Color(29, 155, 236));
         btnStart2.setForeground(new java.awt.Color(255, 255, 255));
         btnStart2.setText("START");
+        btnStart2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStart2ActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(radioEncrypt2);
         radioEncrypt2.setForeground(new java.awt.Color(255, 255, 255));
@@ -581,6 +588,11 @@ public class Frame1 extends javax.swing.JFrame {
         btnStart3.setBackground(new java.awt.Color(29, 155, 236));
         btnStart3.setForeground(new java.awt.Color(255, 255, 255));
         btnStart3.setText("START");
+        btnStart3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStart3ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Original file");
@@ -720,7 +732,8 @@ public class Frame1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear2ActionPerformed
-        // TODO add your handling code here:
+        jProgressBar1.setIndeterminate(false);
+        jProgressBar1.setValue(0);
     }//GEN-LAST:event_btnClear2ActionPerformed
 
     private void radioEncrypt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEncrypt2ActionPerformed
@@ -744,7 +757,8 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txtResultFolder2ActionPerformed
 
     private void btnClear3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear3ActionPerformed
-        // TODO add your handling code here:
+        jProgressBar1.setIndeterminate(false);
+        jProgressBar1.setValue(0);
     }//GEN-LAST:event_btnClear3ActionPerformed
 
     private void txtOriginalFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOriginalFilePathActionPerformed
@@ -763,7 +777,7 @@ public class Frame1 extends javax.swing.JFrame {
             inputFilePath = inputFile.getPath();
             txtFilePath1.setText(inputFilePath);
             //Done 15% progress
-            if (!hasSet) jProgressBar1.setValue(jProgressBar1.getValue()+15);
+            //if (!hasSet) jProgressBar1.setValue(jProgressBar1.getValue()+15);
 	} 
         catch (NullPointerException e) {
             txtFilePath1.setText("No file selected");
@@ -791,7 +805,8 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_radioEncrypt1ActionPerformed
 
     private void btnClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear1ActionPerformed
-        // TODO add your handling code here:
+        jProgressBar1.setIndeterminate(false);
+        jProgressBar1.setValue(0);
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
@@ -801,7 +816,7 @@ public class Frame1 extends javax.swing.JFrame {
             keyPath = key.getPath();
             txtKeyPath1.setText(keyPath);
         //Done 15% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+15);
+        //jProgressBar1.setValue(jProgressBar1.getValue()+15);
         }
         catch(NullPointerException e) {
             txtKeyPath1.setText("No key selected");
@@ -816,7 +831,7 @@ public class Frame1 extends javax.swing.JFrame {
             resultFolderPath = resultFolder.getPath();
             txtResultFolder1.setText(resultFolderPath);
         //Done 15% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+15);
+        //jProgressBar1.setValue(jProgressBar1.getValue()+15);
         }
         catch (NullPointerException e) { 
             txtResultFolder1.setText("No folder selected");
@@ -888,7 +903,7 @@ public class Frame1 extends javax.swing.JFrame {
     private void btnStart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart1ActionPerformed
         // TODO add your handling code here:
         //Done 50% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+5);
+        jProgressBar1.setIndeterminate(true);
         //Get some informations about algorithm, key and file
         String algorithm = comboCryptType1.getSelectedItem().toString();
         String filePath = txtFilePath1.getText();
@@ -903,7 +918,7 @@ public class Frame1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(frame, "Can't read input file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         //Done 60% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Read key file
         try {  
             key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
@@ -911,7 +926,7 @@ public class Frame1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         //Done 70% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Make output file
         try {
             encryptedFile = new File(resultFolderPath+"\\"+inputFile.getName()+".encrypted");
@@ -920,7 +935,7 @@ public class Frame1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         //Done 80% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Do encrypt/decrypt
         if (radioEncrypt1.isSelected() && "DES".equals(algorithm)) try {
             DES.encrypt(key, inputFile, encryptedFile);
@@ -933,12 +948,20 @@ public class Frame1 extends javax.swing.JFrame {
             Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Finish 100% progress
-        jProgressBar1.setValue(jProgressBar1.getValue()+20);
+        //jProgressBar1.setValue(jProgressBar1.getValue()+20);
     }//GEN-LAST:event_btnStart1ActionPerformed
 
     private void comboCryptType1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCryptType1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboCryptType1ActionPerformed
+
+    private void btnStart2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart2ActionPerformed
+        jProgressBar1.setIndeterminate(true);
+    }//GEN-LAST:event_btnStart2ActionPerformed
+
+    private void btnStart3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart3ActionPerformed
+        jProgressBar1.setIndeterminate(true);
+    }//GEN-LAST:event_btnStart3ActionPerformed
 
     /**
      * @param args the command line arguments
