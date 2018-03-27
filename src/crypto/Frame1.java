@@ -19,6 +19,7 @@ import javafx.scene.ImageCursor;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import sun.applet.resources.MsgAppletViewer_de;
 
 
 /**
@@ -64,6 +65,12 @@ public class Frame1 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtFileStatus = new javax.swing.JTextArea();
+        labelMsgFile = new javax.swing.JLabel();
+        labelKeyFile = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtKeyStatus = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         filePanel = new javax.swing.JPanel();
@@ -126,15 +133,48 @@ public class Frame1 extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Choose a file in the left-hand tab to start");
 
+        txtFileStatus.setEditable(false);
+        txtFileStatus.setBackground(new java.awt.Color(240, 240, 240));
+        txtFileStatus.setColumns(20);
+        txtFileStatus.setRows(5);
+        txtFileStatus.setBorder(txtKeyStatus.getBorder());
+        txtFileStatus.setMaximumSize(new java.awt.Dimension(160, 90));
+        txtFileStatus.setMinimumSize(new java.awt.Dimension(160, 90));
+        txtFileStatus.setVisible(false);
+        jScrollPane1.setViewportView(txtFileStatus);
+
+        labelMsgFile.setText("Message file:");
+        labelMsgFile.setVisible(false);
+
+        labelKeyFile.setText("Key file:");
+        labelKeyFile.setVisible(false);
+
+        txtKeyStatus.setEditable(false);
+        txtKeyStatus.setBackground(new java.awt.Color(240, 240, 240));
+        txtKeyStatus.setColumns(20);
+        txtKeyStatus.setRows(5);
+        txtKeyStatus.setMaximumSize(new java.awt.Dimension(160, 90));
+        txtKeyStatus.setMinimumSize(new java.awt.Dimension(160, 90));
+        txtKeyStatus.setPreferredSize(new java.awt.Dimension(160, 90));
+        txtKeyStatus.setVisible(false);
+        jScrollPane2.setViewportView(txtKeyStatus);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelMsgFile)
+                            .addComponent(labelKeyFile))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -142,8 +182,16 @@ public class Frame1 extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(207, 207, 207)
+                .addGap(45, 45, 45)
+                .addComponent(labelMsgFile)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelKeyFile)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -426,6 +474,7 @@ public class Frame1 extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Cryptography type");
 
+        comboCryptType2.setBackground(new java.awt.Color(29, 155, 236));
         comboCryptType2.setForeground(new java.awt.Color(255, 255, 255));
         comboCryptType2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RSA", "DES", "AES" }));
 
@@ -734,6 +783,11 @@ public class Frame1 extends javax.swing.JFrame {
     private void btnClear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear2ActionPerformed
         jProgressBar1.setIndeterminate(false);
         jProgressBar1.setValue(0);
+        txtFileStatus.setText("");
+        txtKeyStatus.setText("");
+        txtFilePath2.setText("");
+        txtKeyPath2.setText("");
+        txtResultFolder2.setText("");
     }//GEN-LAST:event_btnClear2ActionPerformed
 
     private void radioEncrypt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEncrypt2ActionPerformed
@@ -759,6 +813,10 @@ public class Frame1 extends javax.swing.JFrame {
     private void btnClear3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear3ActionPerformed
         jProgressBar1.setIndeterminate(false);
         jProgressBar1.setValue(0);
+        txtFileStatus.setText("");
+        txtKeyStatus.setText("");
+        txtOriginalFilePath.setText("");
+        txtEncryptedFilePath.setText("");
     }//GEN-LAST:event_btnClear3ActionPerformed
 
     private void txtOriginalFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOriginalFilePathActionPerformed
@@ -776,11 +834,20 @@ public class Frame1 extends javax.swing.JFrame {
             inputFile = chooseFile.getSelectedFile();
             inputFilePath = inputFile.getPath();
             txtFilePath1.setText(inputFilePath);
+            jLabel5.setVisible(false);
+            txtFileStatus.setVisible(true);
+            labelMsgFile.setVisible(true);
+            labelMsgFile.setText("Message file:");
+            if (txtFileStatus.getText().length() == 0)
+                txtFileStatus.setText(inputFile.getName() + " loaded successfully...");
+            else
+                txtFileStatus.setText(txtFileStatus.getText() + "\n" + inputFile.getName() + " loaded successfully...");
             //Done 15% progress
             //if (!hasSet) jProgressBar1.setValue(jProgressBar1.getValue()+15);
 	} 
         catch (NullPointerException e) {
-            txtFilePath1.setText("No file selected");
+            txtFilePath1.setText("");
+            txtFileStatus.setText("No file has been choosen...");
         }
     }//GEN-LAST:event_btnFile1ActionPerformed
 
@@ -807,6 +874,11 @@ public class Frame1 extends javax.swing.JFrame {
     private void btnClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear1ActionPerformed
         jProgressBar1.setIndeterminate(false);
         jProgressBar1.setValue(0);
+        txtFileStatus.setText("");
+        txtKeyStatus.setText("");
+        txtFilePath1.setText("");
+        txtKeyPath1.setText("");
+        txtResultFolder1.setText("");
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
@@ -815,11 +887,19 @@ public class Frame1 extends javax.swing.JFrame {
             key = chooseFile.getSelectedFile();
             keyPath = key.getPath();
             txtKeyPath1.setText(keyPath);
+            txtKeyStatus.setVisible(true);
+            labelKeyFile.setVisible(true);
+            labelKeyFile.setText("Key file:");
+            if (txtKeyStatus.getText().length() == 0)
+                txtKeyStatus.setText(key.getName() + " loaded successfully...");
+            else
+                txtKeyStatus.setText(txtKeyStatus.getText() + "\n" + key.getName() + " loaded successfully...");
         //Done 15% progress
         //jProgressBar1.setValue(jProgressBar1.getValue()+15);
         }
         catch(NullPointerException e) {
-            txtKeyPath1.setText("No key selected");
+            txtKeyPath1.setText("");
+            txtKeyStatus.setText("No key file has been choosen...");
         }
     }//GEN-LAST:event_btnKey1ActionPerformed
 
@@ -834,7 +914,7 @@ public class Frame1 extends javax.swing.JFrame {
         //jProgressBar1.setValue(jProgressBar1.getValue()+15);
         }
         catch (NullPointerException e) { 
-            txtResultFolder1.setText("No folder selected");
+            txtResultFolder1.setText("No folder has been choosen...");
         }
     }//GEN-LAST:event_btnResultFolder1ActionPerformed
 
@@ -845,9 +925,18 @@ public class Frame1 extends javax.swing.JFrame {
             inputFile = chooseDirectory.getSelectedFile();
             inputFilePath = inputFile.getPath();
             txtFilePath2.setText(inputFilePath);
+            jLabel5.setVisible(false);
+            txtFileStatus.setVisible(true);
+            labelMsgFile.setVisible(true);
+            labelMsgFile.setText("Message file: ");
+            if (txtFileStatus.getText().length() == 0)
+                txtFileStatus.setText(inputFile.getName() + " loaded successfully...");
+            else
+                txtFileStatus.setText(txtFileStatus.getText() + "\n" + inputFile.getName() + " loaded successfully...");
         } 
         catch (NullPointerException e) {
-            txtFilePath2.setText("No folder selected");
+            txtFilePath2.setText("");
+            txtFileStatus.setText("No folder has been choosen...");
         }
     }//GEN-LAST:event_btnFile2ActionPerformed
 
@@ -857,9 +946,17 @@ public class Frame1 extends javax.swing.JFrame {
             key = chooseFile.getSelectedFile();
             keyPath = key.getPath();
             txtKeyPath2.setText(keyPath);
+            txtKeyStatus.setVisible(true);
+            labelKeyFile.setVisible(true);
+            labelKeyFile.setText("Key file:");
+            if (txtKeyStatus.getText().length() == 0)
+                txtKeyStatus.setText(key.getName() + " loaded successfully...");
+            else
+                txtKeyStatus.setText(txtKeyStatus.getText() + "\n" + key.getName() + " loaded successfully...");
         } 
         catch (NullPointerException e) {
-            txtKeyPath2.setText("No key selected");
+            txtKeyPath2.setText("");
+            txtKeyStatus.setText("No key file has been choosen...");
         }
     }//GEN-LAST:event_btnKey2ActionPerformed
 
@@ -872,7 +969,7 @@ public class Frame1 extends javax.swing.JFrame {
             txtResultFolder2.setText(resultFolderPath);
         } 
         catch (NullPointerException e) {
-            txtResultFolder2.setText("No folder selected");
+            txtResultFolder2.setText("No folder has been choosen");
         }
     }//GEN-LAST:event_btnResultFolder2ActionPerformed
 
@@ -882,9 +979,18 @@ public class Frame1 extends javax.swing.JFrame {
             inputFile = chooseFile.getSelectedFile();
             inputFilePath = inputFile.getPath();
             txtOriginalFilePath.setText(inputFilePath);
+            jLabel5.setVisible(false);
+            txtFileStatus.setVisible(true);
+            labelMsgFile.setVisible(true);
+            labelMsgFile.setText("Original file: ");
+            if (txtFileStatus.getText().length() == 0)
+                txtFileStatus.setText(inputFile.getName() + " loaded successfully...");
+            else
+                txtFileStatus.setText(txtFileStatus.getText() + "\n" + inputFile.getName() + " loaded successfully...");
         } 
         catch (NullPointerException e) {
-            txtOriginalFilePath.setText("No file selected");
+            txtOriginalFilePath.setText("");
+            txtFileStatus.setText("No file has been choosen...");
         }
     }//GEN-LAST:event_btnOriginalFileActionPerformed
 
@@ -894,9 +1000,19 @@ public class Frame1 extends javax.swing.JFrame {
             encryptedFile = chooseFile.getSelectedFile();
             encryptedFilePath = encryptedFile.getPath();
             txtEncryptedFilePath.setText(encryptedFilePath);
+            jLabel5.setVisible(false);
+            txtKeyStatus.setVisible(true);
+            labelKeyFile.setVisible(true);
+            labelKeyFile.setText("Encrypted file: ");
+            if (txtKeyStatus.getText().length() == 0)
+                txtKeyStatus.setText(encryptedFile.getName() + " loaded successfully...");
+            else
+                txtKeyStatus.setText(txtKeyStatus.getText() + "\n" + encryptedFile.getName() + " loaded successfully...");
+            
         } 
         catch (NullPointerException e) {
-            txtEncryptedFilePath.setText("No file selected");
+            txtEncryptedFilePath.setText("");
+            txtKeyStatus.setText("No file has been choosen..");
         }
     }//GEN-LAST:event_btnEncryptedFileActionPerformed
 
@@ -904,6 +1020,7 @@ public class Frame1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Done 50% progress
         jProgressBar1.setIndeterminate(true);
+        jLabel5.setVisible(false);
         //Get some informations about algorithm, key and file
         String algorithm = comboCryptType1.getSelectedItem().toString();
         String filePath = txtFilePath1.getText();
@@ -957,10 +1074,12 @@ public class Frame1 extends javax.swing.JFrame {
 
     private void btnStart2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart2ActionPerformed
         jProgressBar1.setIndeterminate(true);
+        jLabel5.setVisible(false);
     }//GEN-LAST:event_btnStart2ActionPerformed
 
     private void btnStart3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart3ActionPerformed
         jProgressBar1.setIndeterminate(true);
+        jLabel5.setVisible(false);
     }//GEN-LAST:event_btnStart3ActionPerformed
 
     /**
@@ -1032,7 +1151,11 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel labelKeyFile;
+    private javax.swing.JLabel labelMsgFile;
     private javax.swing.JRadioButton radioDecrypt1;
     private javax.swing.JRadioButton radioDecrypt2;
     private javax.swing.JRadioButton radioEncrypt1;
@@ -1040,8 +1163,10 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JTextField txtEncryptedFilePath;
     private javax.swing.JTextField txtFilePath1;
     private javax.swing.JTextField txtFilePath2;
+    private javax.swing.JTextArea txtFileStatus;
     private javax.swing.JTextField txtKeyPath1;
     private javax.swing.JTextField txtKeyPath2;
+    private javax.swing.JTextArea txtKeyStatus;
     private javax.swing.JTextField txtOriginalFilePath;
     private javax.swing.JTextField txtResultFolder1;
     private javax.swing.JTextField txtResultFolder2;
