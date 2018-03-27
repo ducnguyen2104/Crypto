@@ -873,12 +873,20 @@ public class Frame1 extends javax.swing.JFrame {
 
     private void btnClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear1ActionPerformed
         jProgressBar1.setIndeterminate(false);
+//<<<<<<< HEAD
         jProgressBar1.setValue(0);
         txtFileStatus.setText("");
         txtKeyStatus.setText("");
         txtFilePath1.setText("");
         txtKeyPath1.setText("");
         txtResultFolder1.setText("");
+//=======
+        txtFilePath1.setText("");
+        radioEncrypt1.setSelected(true);
+        txtKeyPath1.setText("");
+        txtResultFolder1.setText("");
+        comboCryptType1.setSelectedItem("RSA");
+//>>>>>>> 3b6f2875cbccbdbbe50751fc3e4e46b08ebba3ef
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
@@ -1066,6 +1074,7 @@ public class Frame1 extends javax.swing.JFrame {
         }
         //Finish 100% progress
         //jProgressBar1.setValue(jProgressBar1.getValue()+20);
+        jProgressBar1.setIndeterminate(false);
     }//GEN-LAST:event_btnStart1ActionPerformed
 
     private void comboCryptType1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCryptType1ActionPerformed
