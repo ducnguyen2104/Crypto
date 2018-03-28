@@ -937,9 +937,12 @@ public class Frame1 extends javax.swing.JFrame {
             txtFileStatus.setVisible(true);
             labelMsgFile.setVisible(true);
             labelMsgFile.setText("Message file: ");
-            if (txtFileStatus.getText().length() == 0)
+            if (txtFileStatus.getText().length() == 0){
                 txtFileStatus.setText(inputFile.getName() + " loaded successfully...");
-            else
+                File folder = new File(inputFilePath);
+                File[] listOfFiles = folder.listFiles();
+                for(int i = 0; i < listOfFiles.length; i++) txtFileStatus.setText(txtFileStatus.getText() + "\n" + listOfFiles[i].getName() + " loaded successfully...");
+            }else
                 txtFileStatus.setText(txtFileStatus.getText() + "\n" + inputFile.getName() + " loaded successfully...");
         } 
         catch (NullPointerException e) {
