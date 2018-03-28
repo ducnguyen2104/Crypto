@@ -63,11 +63,6 @@ public class DES {
             inputStream.close();
             outputStream.close();
             
-            //Show complete dialog
-            Component frame = null;
-            if (cipherMode == Cipher.ENCRYPT_MODE) JOptionPane.showMessageDialog(frame, "Your file has been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-            else JOptionPane.showMessageDialog(frame, "Your file has been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-            
         } catch ( NoSuchPaddingException    | NoSuchAlgorithmException
                 | InvalidKeyException       | BadPaddingException
                 | IllegalBlockSizeException | IOException ex) {
