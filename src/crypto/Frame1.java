@@ -886,9 +886,17 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
-        chooseFile.showOpenDialog(null);
+        if (comboCryptType1.getSelectedIndex() == 0) {
+            chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooseDirectory.showOpenDialog(null);
+        }
+        else
+            chooseFile.showOpenDialog(null);
         try {
-            key = chooseFile.getSelectedFile();
+            if (comboCryptType1.getSelectedIndex() == 0)
+                key = chooseDirectory.getSelectedFile();
+            else
+                key = chooseFile.getSelectedFile();
             keyPath = key.getPath();
             txtKeyPath1.setText(keyPath);
             txtKeyStatus.setVisible(true);
@@ -1043,13 +1051,18 @@ public class Frame1 extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Can't read input file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+
         //Done 60% progress
         //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Read key file
-        try {
-            key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (algorithm.equals("RSA")) {
+            key = keyPath;
+        } else {
+            try {
+                key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         }
         //Done 70% progress
         //jProgressBar1.setValue(jProgressBar1.getValue()+10);
@@ -1078,8 +1091,11 @@ public class Frame1 extends javax.swing.JFrame {
         }
         //Finish 100% progress
         //Show complete dialog
-        if (radioEncrypt1.isSelected()) JOptionPane.showMessageDialog(frame, "Your file has been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-        else JOptionPane.showMessageDialog(frame, "Your file has been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+        if (radioEncrypt1.isSelected()) {
+            JOptionPane.showMessageDialog(frame, "Your file has been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Your file has been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+        }
         jProgressBar1.setIndeterminate(false);
     }//GEN-LAST:event_btnStart1ActionPerformed
 
@@ -1110,27 +1126,30 @@ public class Frame1 extends javax.swing.JFrame {
             try {
                 encryptedFile = new File(resultFolderPath + "\\" + listOfFiles[i].getName() + ".encrypted");
                 decryptedFile = new File(resultFolderPath + "\\" + listOfFiles[i].getName() + ".decrypted");
-            }catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             //Do encrypt/decrypt
             if (radioEncrypt2.isSelected() && "DES".equals(algorithm)) {
                 try {
                     DES.encrypt(key, listOfFiles[i], encryptedFile);
-                }catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (radioDecrypt2.isSelected() && "DES".equals(algorithm)) {
                 try {
                     DES.decrypt(key, listOfFiles[i], decryptedFile);
-                }catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             txtFileStatus.setText(txtFileStatus.getText() + "\n" + listOfFiles[i].getName() + " finished !");
         }
-        if (radioEncrypt1.isSelected()) JOptionPane.showMessageDialog(frame, "Your files had been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-        else JOptionPane.showMessageDialog(frame, "Your files had been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+        if (radioEncrypt1.isSelected()) {
+            JOptionPane.showMessageDialog(frame, "Your files had been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Your files had been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+        }
         jProgressBar1.setIndeterminate(false);
     }//GEN-LAST:event_btnStart2ActionPerformed
 
