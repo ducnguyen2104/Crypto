@@ -6,8 +6,11 @@
 package crypto;
 
 import java.awt.Component;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -1043,16 +1046,25 @@ public class Frame1 extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Can't read input file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        //Done 60% progress
-        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Read key file
         try {
-            key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+            //If there's no key path
+            if ("".equals(keyPath)) {
+                key = "00000000";
+                File keyFile = new File(resultFolderPath + "\\" + "key.txt");
+                BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                writer.write("00000000");
+                writer.close();
+            }
+            //Otherwise
+            else key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+            //If key.length < 8
+            if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Done 70% progress
-        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Make output file
         try {
             encryptedFile = new File(resultFolderPath + "\\" + inputFile.getName() + ".encrypted");
@@ -1060,8 +1072,6 @@ public class Frame1 extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        //Done 80% progress
-        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Do encrypt/decrypt
         if (radioEncrypt1.isSelected() && "DES".equals(algorithm)) {
             try {
@@ -1076,7 +1086,6 @@ public class Frame1 extends javax.swing.JFrame {
                 Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //Finish 100% progress
         //Show complete dialog
         if (radioEncrypt1.isSelected()) JOptionPane.showMessageDialog(frame, "Your file has been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
         else JOptionPane.showMessageDialog(frame, "Your file has been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);

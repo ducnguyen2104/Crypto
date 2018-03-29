@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class DES {
     private static final String ALGORITHM = "DES";
-    private static final String TRANSFORMATION = "DES";
+    private static final String TRANSFORMATION = "DES/ECB/PKCS5Padding";
     //Encrypt Function
     public static void encrypt(String key, File inputFile, File outputFile)
             throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException {
@@ -46,7 +46,7 @@ public class DES {
             throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException {
         try {
             DESKeySpec dks = new DESKeySpec(key.getBytes());
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
+            SecretKeyFactory skf = SecretKeyFactory.getInstance(ALGORITHM);
             SecretKey desKey = skf.generateSecret(dks);
             
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
