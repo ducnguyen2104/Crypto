@@ -957,9 +957,17 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFile2ActionPerformed
 
     private void btnKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey2ActionPerformed
-        chooseFile.showOpenDialog(null);
+        if (comboCryptType1.getSelectedIndex() == 0) {
+            chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooseDirectory.showOpenDialog(null);
+        }
+        else
+            chooseFile.showOpenDialog(null);
         try {
-            key = chooseFile.getSelectedFile();
+            if (comboCryptType1.getSelectedIndex() == 0)
+                key = chooseDirectory.getSelectedFile();
+            else
+                key = chooseFile.getSelectedFile();
             keyPath = key.getPath();
             txtKeyPath2.setText(keyPath);
             txtKeyStatus.setVisible(true);
