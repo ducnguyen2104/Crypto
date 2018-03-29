@@ -1127,9 +1127,22 @@ public class Frame1 extends javax.swing.JFrame {
 
         //Read key file
         try {
-            key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+            //If there's no key path
+            if ("".equals(keyPath)) {
+                key = "00000000";
+                File keyFile = new File(resultFolderPath + "\\" + "key.txt");
+                BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                writer.write("00000000");
+                writer.close();
+            }
+            //Otherwise
+            else key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+            //If key.length < 8
+            if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         File folder = new File(filePath);
