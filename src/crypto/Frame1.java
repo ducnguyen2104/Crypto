@@ -889,7 +889,7 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
-        if (comboCryptType1.getSelectedIndex() == 0) {
+        if (comboCryptType1.getSelectedIndex() == 0) { //RSA
             chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             chooseDirectory.showOpenDialog(null);
         }
@@ -960,7 +960,7 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFile2ActionPerformed
 
     private void btnKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey2ActionPerformed
-        if (comboCryptType1.getSelectedIndex() == 0) {
+        if (comboCryptType1.getSelectedIndex() == 0) { //RSA
             chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             chooseDirectory.showOpenDialog(null);
         }
