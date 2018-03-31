@@ -1044,7 +1044,7 @@ public class Frame1 extends javax.swing.JFrame {
 
     private void btnStart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart1ActionPerformed
         // TODO add your handling code here:
-        //Done 50% progress
+        //Done 75% progress
         jProgressBar1.setIndeterminate(true);
         jLabel5.setVisible(false);
         //Get some informations about algorithm, key and file
@@ -1066,16 +1066,33 @@ public class Frame1 extends javax.swing.JFrame {
         try {
             //If there's no key path
             if ("".equals(keyPath)) {
-                key = "00000000";
-                File keyFile = new File(resultFolderPath + "\\" + "key.txt");
-                BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
-                writer.write("00000000");
-                writer.close();
+                if ("DES".equals(algorithm)) {
+                    //Auto generate key for DES
+                    key = "00000000";
+                    File keyFile = new File(resultFolderPath + "\\" + "key.txt");
+                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    writer.write("00000000");
+                    writer.close();   
+                }
+                if ("AES".equals(algorithm)) {
+                    //Auto generate key for AES
+                    key = "0000000000000000";
+                    File keyFile = new File(resultFolderPath + "\\" + "key.txt");
+                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    writer.write("0000000000000000");
+                    writer.close();  
+                }
             }
             //Otherwise
             else key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
-            //If key.length < 8
-            if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
+            if ("DES".equals(algorithm)) {
+                //If key.length < 8
+                if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
+            }         
+            if ("AES".equals(algorithm)) {
+                //If key.length < 16
+                if (key.length()<16) for (int i = 0; i<16-key.length();i++) key = "0" + key;
+            }                
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
@@ -1088,7 +1105,7 @@ public class Frame1 extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        //Do encrypt/decrypt
+        //Do encrypt/decrypt for DES
         if (radioEncrypt1.isSelected() && "DES".equals(algorithm)) {
             try {
                 DES.encrypt(key, inputFile, encryptedFile);
@@ -1098,6 +1115,20 @@ public class Frame1 extends javax.swing.JFrame {
         } else if (radioDecrypt1.isSelected() && "DES".equals(algorithm)) {
             try {
                 DES.decrypt(key, inputFile, decryptedFile);
+            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        //Do encrypt/decrypt for AES
+        if (radioEncrypt1.isSelected() && "AES".equals(algorithm)) {
+            try {
+                AES.encrypt(key, inputFile, encryptedFile);
+            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (radioDecrypt1.isSelected() && "AES".equals(algorithm)) {
+            try {
+                AES.decrypt(key, inputFile, decryptedFile);
             } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                 Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1124,21 +1155,38 @@ public class Frame1 extends javax.swing.JFrame {
         String keyPath = txtKeyPath2.getText();
         String resultFolderPath = txtResultFolder2.getText();
         String key = "";
-
+   
         //Read key file
         try {
             //If there's no key path
             if ("".equals(keyPath)) {
-                key = "00000000";
-                File keyFile = new File(resultFolderPath + "\\" + "key.txt");
-                BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
-                writer.write("00000000");
-                writer.close();
+                if ("DES".equals(algorithm)) {
+                    //Auto generate key for DES
+                    key = "00000000";
+                    File keyFile = new File(resultFolderPath + "\\" + "key.txt");
+                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    writer.write("00000000");
+                    writer.close();   
+                }
+                if ("AES".equals(algorithm)) {
+                    //Auto generate key for AES
+                    key = "0000000000000000";
+                    File keyFile = new File(resultFolderPath + "\\" + "key.txt");
+                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    writer.write("0000000000000000");
+                    writer.close();  
+                }
             }
             //Otherwise
             else key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
-            //If key.length < 8
-            if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
+            if ("DES".equals(algorithm)) {
+                //If key.length < 8
+                if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
+            }         
+            if ("AES".equals(algorithm)) {
+                //If key.length < 16
+                if (key.length()<16) for (int i = 0; i<16-key.length();i++) key = "0" + key;
+            }  
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
@@ -1154,7 +1202,7 @@ public class Frame1 extends javax.swing.JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-            //Do encrypt/decrypt
+            //Do encrypt/decrypt for DES
             if (radioEncrypt2.isSelected() && "DES".equals(algorithm)) {
                 try {
                     DES.encrypt(key, listOfFiles[i], encryptedFile);
@@ -1168,6 +1216,21 @@ public class Frame1 extends javax.swing.JFrame {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
+            //Do encrypt/decrypt for AES
+            if (radioEncrypt1.isSelected() && "AES".equals(algorithm)) {
+            try {
+                AES.encrypt(key, inputFile, encryptedFile);
+            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (radioDecrypt1.isSelected() && "AES".equals(algorithm)) {
+            try {
+                AES.decrypt(key, inputFile, decryptedFile);
+            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
             txtFileStatus.setText(txtFileStatus.getText() + "\n" + listOfFiles[i].getName() + " finished !");
         }
         if (radioEncrypt1.isSelected()) {
