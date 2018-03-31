@@ -1071,8 +1071,8 @@ public class Frame1 extends javax.swing.JFrame {
         }
         //Read key file
         try {
-            //If there's no key path
-            if ("".equals(keyPath)) {
+            //If there's no key path and encrypted mode is selected
+            if ("".equals(keyPath) && radioEncrypt1.isSelected()) {
                 if ("DES".equals(algorithm)) {
                     //Auto generate key for DES
                     key = "00000000";
@@ -1113,6 +1113,9 @@ public class Frame1 extends javax.swing.JFrame {
                     }
                 }
             } //Otherwise
+            else if ("".equals(keyPath) && radioDecrypt1.isSelected()) {
+                JOptionPane.showMessageDialog(frame, "Please select key file/folder to decrypt!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
             else {
                 if ("RSA".equals(algorithm))
                     key = keyPath;
@@ -1215,8 +1218,9 @@ public class Frame1 extends javax.swing.JFrame {
 
         //Read key file
         try {
-            //If there's no key path
-            if ("".equals(keyPath)) {
+            //If there's no key path and encrypt mode is selected
+            if ("".equals(keyPath) && radioEncrypt2.isSelected()) {
+                
                 if ("DES".equals(algorithm)) {
                     //Auto generate key for DES
                     key = "00000000";
@@ -1233,9 +1237,40 @@ public class Frame1 extends javax.swing.JFrame {
                     writer.write("0000000000000000");
                     writer.close();
                 }
-            } //Otherwise
+                if ("RSA".equals(algorithm)) {
+                    //Auto generate key for RSA
+                    key = resultFolderPath;
+                    KeyPair kp;
+                    PublicKey pub = null;
+                    PrivateKey pvt = null;
+                    KeyPairGenerator kpg = null;
+                    try {
+                        kpg = KeyPairGenerator.getInstance("RSA");
+                    } catch (NoSuchAlgorithmException ex) {
+                        Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    kpg.initialize(2048);
+                    kp = kpg.generateKeyPair();
+                    pub = kp.getPublic();
+                    pvt = kp.getPrivate();
+                    try (FileOutputStream out = new FileOutputStream(resultFolderPath + "\\" + "seckey.key")) { //private key
+                        out.write(kp.getPrivate().getEncoded());
+                    }
+                    try (FileOutputStream out = new FileOutputStream(resultFolderPath + "\\" + "pubkey.pub")) { //public key
+                        out.write(kp.getPublic().getEncoded());
+                    }
+                }
+            }
+            //key is required for decryption
+            else if ("".equals(keyPath) && radioDecrypt2.isSelected()) {
+                JOptionPane.showMessageDialog(frame, "Please select key file/folder to decrypt!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            //Otherwise
             else {
-                key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+                if ("RSA".equals(algorithm))
+                    key = keyPath;
+                else
+                    key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
             }
             if ("DES".equals(algorithm)) {
                 //If key.length < 8
@@ -1268,6 +1303,24 @@ public class Frame1 extends javax.swing.JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
+            
+            //Do encrypt/decrypt for RSA
+            if (radioEncrypt2.isSelected() && "RSA".equals(algorithm)) {
+                try {
+                    if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key"))
+                        RSA.encrypt(key, listOfFiles[i], encryptedFile);
+                } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                    Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (radioDecrypt2.isSelected() && "RSA".equals(algorithm)) {
+                try {
+                    if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key"))
+                        RSA.decrypt(key, listOfFiles[i], decryptedFile);
+                } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                    Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
             //Do encrypt/decrypt for DES
             if (radioEncrypt2.isSelected() && "DES".equals(algorithm)) {
                 try {
