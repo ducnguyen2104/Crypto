@@ -3,9 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/RSA.java</file>
             <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/Frame1.java</file>
             <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/DES.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/Frame1.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/RSA.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/DES.java</file>
+=======
+            <file>file:/C:/Users/Hào/Documents/GitHub/Crypto/src/crypto/DES.java</file>
+            <file>file:/C:/Users/Hào/Documents/GitHub/Crypto/src/crypto/Frame1.java</file>
+            <file>file:/C:/Users/Hào/Documents/GitHub/Crypto/src/crypto/RSA.java</file>
+>>>>>>> 99551f931668395cba622be68b6687d140ae541a
+>>>>>>> 2e2c470c5c5978073d2dcecf7dddd7139fb75d70
         </group>
     </open-files>
 </project-private>
