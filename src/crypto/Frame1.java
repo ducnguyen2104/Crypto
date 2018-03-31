@@ -9,10 +9,15 @@ import java.awt.Component;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -892,14 +897,15 @@ public class Frame1 extends javax.swing.JFrame {
         if (comboCryptType1.getSelectedIndex() == 0) { //RSA
             chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             chooseDirectory.showOpenDialog(null);
-        }
-        else
+        } else {
             chooseFile.showOpenDialog(null);
+        }
         try {
-            if (comboCryptType1.getSelectedIndex() == 0)
+            if (comboCryptType1.getSelectedIndex() == 0) {
                 key = chooseDirectory.getSelectedFile();
-            else
+            } else {
                 key = chooseFile.getSelectedFile();
+            }
             keyPath = key.getPath();
             txtKeyPath1.setText(keyPath);
             txtKeyStatus.setVisible(true);
@@ -963,14 +969,15 @@ public class Frame1 extends javax.swing.JFrame {
         if (comboCryptType1.getSelectedIndex() == 0) { //RSA
             chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             chooseDirectory.showOpenDialog(null);
-        }
-        else
+        } else {
             chooseFile.showOpenDialog(null);
+        }
         try {
-            if (comboCryptType1.getSelectedIndex() == 0)
+            if (comboCryptType1.getSelectedIndex() == 0) {
                 key = chooseDirectory.getSelectedFile();
-            else
+            } else {
                 key = chooseFile.getSelectedFile();
+            }
             keyPath = key.getPath();
             txtKeyPath2.setText(keyPath);
             txtKeyStatus.setVisible(true);
@@ -1070,29 +1077,65 @@ public class Frame1 extends javax.swing.JFrame {
                     //Auto generate key for DES
                     key = "00000000";
                     File keyFile = new File(resultFolderPath + "\\" + "key.txt");
-                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(keyFile));
                     writer.write("00000000");
-                    writer.close();   
+                    writer.close();
                 }
                 if ("AES".equals(algorithm)) {
                     //Auto generate key for AES
                     key = "0000000000000000";
                     File keyFile = new File(resultFolderPath + "\\" + "key.txt");
-                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(keyFile));
                     writer.write("0000000000000000");
-                    writer.close();  
+                    writer.close();
                 }
+                if ("RSA".equals(algorithm)) {
+                    //Auto generate key for RSA
+                    key = resultFolderPath;
+                    KeyPair kp;
+                    PublicKey pub = null;
+                    PrivateKey pvt = null;
+                    KeyPairGenerator kpg = null;
+                    try {
+                        kpg = KeyPairGenerator.getInstance("RSA");
+                    } catch (NoSuchAlgorithmException ex) {
+                        Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    kpg.initialize(2048);
+                    kp = kpg.generateKeyPair();
+                    pub = kp.getPublic();
+                    pvt = kp.getPrivate();
+                    try (FileOutputStream out = new FileOutputStream(resultFolderPath + "\\" + "seckey.key")) { //private key
+                        out.write(kp.getPrivate().getEncoded());
+                    }
+                    try (FileOutputStream out = new FileOutputStream(resultFolderPath + "\\" + "pubkey.pub")) { //public key
+                        out.write(kp.getPublic().getEncoded());
+                    }
+                }
+            } //Otherwise
+            else {
+                if ("RSA".equals(algorithm))
+                    key = keyPath;
+                else
+                    key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
             }
-            //Otherwise
-            else key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
             if ("DES".equals(algorithm)) {
                 //If key.length < 8
-                if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
-            }         
+                if (key.length() < 8) {
+                    for (int i = 0; i < 8 - key.length(); i++) {
+                        key = "0" + key;
+                    }
+                }
+            }
             if ("AES".equals(algorithm)) {
                 //If key.length < 16
-                if (key.length()<16) for (int i = 0; i<16-key.length();i++) key = "0" + key;
-            }                
+                if (key.length() < 16) {
+                    for (int i = 0; i < 16 - key.length(); i++) {
+                        key = "0" + key;
+                    }
+                }
+            }
+
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
@@ -1104,6 +1147,20 @@ public class Frame1 extends javax.swing.JFrame {
             decryptedFile = new File(resultFolderPath + "\\" + inputFile.getName() + ".decrypted");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        //Do encrypt/decrypt for RSA
+        if (radioEncrypt1.isSelected() && "RSA".equals(algorithm)) {
+            try {
+                RSA.encrypt(key, inputFile, encryptedFile);
+            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (radioDecrypt1.isSelected() && "RSA".equals(algorithm)) {
+            try {
+                RSA.decrypt(key, inputFile, decryptedFile);
+            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         //Do encrypt/decrypt for DES
         if (radioEncrypt1.isSelected() && "DES".equals(algorithm)) {
@@ -1155,7 +1212,7 @@ public class Frame1 extends javax.swing.JFrame {
         String keyPath = txtKeyPath2.getText();
         String resultFolderPath = txtResultFolder2.getText();
         String key = "";
-   
+
         //Read key file
         try {
             //If there's no key path
@@ -1164,29 +1221,38 @@ public class Frame1 extends javax.swing.JFrame {
                     //Auto generate key for DES
                     key = "00000000";
                     File keyFile = new File(resultFolderPath + "\\" + "key.txt");
-                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(keyFile));
                     writer.write("00000000");
-                    writer.close();   
+                    writer.close();
                 }
                 if ("AES".equals(algorithm)) {
                     //Auto generate key for AES
                     key = "0000000000000000";
                     File keyFile = new File(resultFolderPath + "\\" + "key.txt");
-                    BufferedWriter  writer = new BufferedWriter(new FileWriter(keyFile));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(keyFile));
                     writer.write("0000000000000000");
-                    writer.close();  
+                    writer.close();
                 }
+            } //Otherwise
+            else {
+                key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
             }
-            //Otherwise
-            else key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
             if ("DES".equals(algorithm)) {
                 //If key.length < 8
-                if (key.length()<8) for (int i = 0; i<8-key.length();i++) key = "0" + key;
-            }         
+                if (key.length() < 8) {
+                    for (int i = 0; i < 8 - key.length(); i++) {
+                        key = "0" + key;
+                    }
+                }
+            }
             if ("AES".equals(algorithm)) {
                 //If key.length < 16
-                if (key.length()<16) for (int i = 0; i<16-key.length();i++) key = "0" + key;
-            }  
+                if (key.length() < 16) {
+                    for (int i = 0; i < 16 - key.length(); i++) {
+                        key = "0" + key;
+                    }
+                }
+            }
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
@@ -1216,21 +1282,21 @@ public class Frame1 extends javax.swing.JFrame {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
             //Do encrypt/decrypt for AES
             if (radioEncrypt1.isSelected() && "AES".equals(algorithm)) {
-            try {
-                AES.encrypt(key, inputFile, encryptedFile);
-            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
-                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    AES.encrypt(key, inputFile, encryptedFile);
+                } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                    Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (radioDecrypt1.isSelected() && "AES".equals(algorithm)) {
+                try {
+                    AES.decrypt(key, inputFile, decryptedFile);
+                } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                    Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        } else if (radioDecrypt1.isSelected() && "AES".equals(algorithm)) {
-            try {
-                AES.decrypt(key, inputFile, decryptedFile);
-            } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
-                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
             txtFileStatus.setText(txtFileStatus.getText() + "\n" + listOfFiles[i].getName() + " finished !");
         }
         if (radioEncrypt1.isSelected()) {

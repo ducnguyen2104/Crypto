@@ -55,37 +55,28 @@ public class RSA {
             KeyPair kp;
             PublicKey pub = null;
             PrivateKey pvt = null;
-            if (key == null) { //user doesn't has key
-                KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-                kpg.initialize(2048);
-                kp = kpg.generateKeyPair();
-                pub = kp.getPublic();
-                pvt = kp.getPrivate();
-                try (FileOutputStream out = new FileOutputStream("seckey.key")) { //private key
-                    out.write(kp.getPrivate().getEncoded());
-                }
-                try (FileOutputStream out = new FileOutputStream("pubkey.pub")) { //public key
-                    out.write(kp.getPublic().getEncoded());
-                }
-            } else { //user has key
-                File keyFolder = new File(key);
-                File[] listOfFiles = keyFolder.listFiles();
-                KeyFactory kf = KeyFactory.getInstance("RSA");
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    File file = listOfFiles[i];
-                    if (file.isFile() && file.getName().endsWith(".pub")) { //read public key
-                        byte[] bytes = Files.readAllBytes(file.toPath());
-                        X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
-                        pub = kf.generatePublic(ks);  
-                    }
-                    else if (file.isFile() && file.getName().endsWith(".key")) { //read private key
-                        byte[] bytes = Files.readAllBytes(file.toPath());
-                        PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
-                        pvt = kf.generatePrivate(ks);
-                    }
+            File keyFolder = new File(key);
+            File[] listOfFiles = keyFolder.listFiles();
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            for (int i = 0; i < listOfFiles.length; i++) {
+                File file = listOfFiles[i];
+                if (file.isFile() && file.getName().endsWith(".pub")) { //read public key
+                    byte[] bytes = Files.readAllBytes(file.toPath());
+                    X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+                    pub = kf.generatePublic(ks);
+                    break;
                 }
             }
-            
+            for (int i = 0; i < listOfFiles.length; i++) {
+                File file = listOfFiles[i];
+                if (file.isFile() && file.getName().endsWith(".key")) { //read private key
+                    byte[] bytes = Files.readAllBytes(file.toPath());
+                    PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
+                    pvt = kf.generatePrivate(ks);
+                    break;
+                }
+            }
+
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             if (cipherMode == Cipher.ENCRYPT_MODE) {
                 cipher.init(cipherMode, pvt);
@@ -104,13 +95,6 @@ public class RSA {
             inputStream.close();
             outputStream.close();
 
-            //Show complete dialog
-            Component frame = null;
-            if (cipherMode == Cipher.ENCRYPT_MODE) {
-                JOptionPane.showMessageDialog(frame, "Your file has been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(frame, "Your file has been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-            }
 
         } catch (NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidKeyException | BadPaddingException
@@ -119,4 +103,3 @@ public class RSA {
         }
     }
 }
-
