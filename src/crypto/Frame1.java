@@ -1309,6 +1309,7 @@ public class Frame1 extends javax.swing.JFrame {
                 try {
                     if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key"))
                         RSA.encrypt(key, listOfFiles[i], encryptedFile);
+                    else continue;
                 } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1316,6 +1317,7 @@ public class Frame1 extends javax.swing.JFrame {
                 try {
                     if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key"))
                         RSA.decrypt(key, listOfFiles[i], decryptedFile);
+                    else continue;
                 } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
