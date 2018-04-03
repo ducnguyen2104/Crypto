@@ -1343,15 +1343,15 @@ public class Frame1 extends javax.swing.JFrame {
             }
 
             //Do encrypt/decrypt for AES
-            if (radioEncrypt1.isSelected() && "AES".equals(algorithm)) {
+            if (radioEncrypt2.isSelected() && "AES".equals(algorithm)) {
                 try {
-                    AES.encrypt(key, inputFile, encryptedFile);
+                    AES.encrypt(key, listOfFiles[i], encryptedFile);
                 } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (radioDecrypt1.isSelected() && "AES".equals(algorithm)) {
+            } else if (radioDecrypt2.isSelected() && "AES".equals(algorithm)) {
                 try {
-                    AES.decrypt(key, inputFile, decryptedFile);
+                    AES.decrypt(key, listOfFiles[i], decryptedFile);
                 } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
