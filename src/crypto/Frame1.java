@@ -1138,6 +1138,10 @@ public class Frame1 extends javax.swing.JFrame {
                     for (int i = 0; i < 16 - length; i++) {
                         key = "0" + key;
                     }
+                } 
+                //If key.length > 16 => take only 16 characters
+                else if (length > 16) {
+                    key = key.substring(0,16);
                 }
             }
 
@@ -1291,6 +1295,10 @@ public class Frame1 extends javax.swing.JFrame {
                         key = "0" + key;
                     }
                 }
+                //If key.length > 16 => take only 16 characters
+                else if (length > 16) {
+                    key = key.substring(0,16);
+                }
             }
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame, "Can't read key file.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -1358,7 +1366,7 @@ public class Frame1 extends javax.swing.JFrame {
             }
             txtFileStatus.setText(txtFileStatus.getText() + "\n" + listOfFiles[i].getName() + " finished !");
         }
-        if (radioEncrypt1.isSelected()) {
+        if (radioEncrypt2.isSelected()) {
             JOptionPane.showMessageDialog(frame, "Your files had been encrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(frame, "Your files had been decrypted.", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
