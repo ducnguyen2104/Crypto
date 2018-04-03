@@ -1124,16 +1124,18 @@ public class Frame1 extends javax.swing.JFrame {
             }
             if ("DES".equals(algorithm)) {
                 //If key.length < 8
-                if (key.length() < 8) {
-                    for (int i = 0; i < 8 - key.length(); i++) {
+                int length = key.length();
+                if (length < 8) {
+                    for (int i = 0; i < 8 - length; i++) {
                         key = "0" + key;
                     }
                 }
             }
             if ("AES".equals(algorithm)) {
                 //If key.length < 16
-                if (key.length() < 16) {
-                    for (int i = 0; i < 16 - key.length(); i++) {
+                int length = key.length();
+                if (length < 16) {
+                    for (int i = 0; i < 16 - length; i++) {
                         key = "0" + key;
                     }
                 }
