@@ -971,8 +971,8 @@ public class Frame1 extends javax.swing.JFrame {
         try {
 
             key = chooseFile.getSelectedFile();
-            if ((radioEncrypt1.isSelected() && comboCryptType1.getSelectedIndex() == 0 && !key.getName().endsWith(".key")) 
-                    || (radioDecrypt1.isSelected() && comboCryptType1.getSelectedIndex() == 0 && !key.getName().endsWith(".pub") ) ) {
+            if ((radioEncrypt2.isSelected() && comboCryptType2.getSelectedIndex() == 0 && !key.getName().endsWith(".key")) 
+                    || (radioDecrypt2.isSelected() && comboCryptType2.getSelectedIndex() == 0 && !key.getName().endsWith(".pub") ) ) {
                JOptionPane.showMessageDialog(frame, "Wrong key type!", "ERROR", JOptionPane.ERROR_MESSAGE);
                txtKeyStatus.setText("No key file has been choosen...");
                return;
