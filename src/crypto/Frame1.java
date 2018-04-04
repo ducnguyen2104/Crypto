@@ -1377,6 +1377,43 @@ public class Frame1 extends javax.swing.JFrame {
     private void btnStart3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStart3ActionPerformed
         jProgressBar1.setIndeterminate(true);
         jLabel5.setVisible(false);
+        //Get some informations about algorithm, key and file
+        
+        String filePath = txtOriginalFilePath.getText();
+        String encryptedFilePath = txtEncryptedFilePath.getText();
+        
+        //Read input file
+        try {
+            if ("".equals(filePath)) throw new Exception();
+            inputFile = new File(filePath);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(frame, "Can't read input file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        //Done 60% progress
+        //jProgressBar1.setValue(jProgressBar1.getValue()+10);
+        //Read encrypted file
+        try {
+            if ("".equals(encryptedFilePath)) throw new Exception();
+            inputFile = new File(filePath);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(frame, "Can't read encrypted file.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+//        // Do hashing two files
+        try {
+            String fileHash = MD5.getMD5Checksum(filePath);
+            String encryptedFileHash = MD5.getMD5Checksum(encryptedFilePath);
+            
+            if (fileHash.equals(encryptedFileHash))
+                JOptionPane.showMessageDialog(frame, "Encrypted file is the same with the original file!", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(frame, "Encrypted file is DIFFERENT FROM the original file!", "FAIL", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+        jProgressBar1.setIndeterminate(false);
     }//GEN-LAST:event_btnStart3ActionPerformed
 
     /**
