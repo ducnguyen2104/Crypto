@@ -6,6 +6,8 @@
 package crypto;
 
 import java.awt.Component;
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,26 +40,41 @@ public class RSA {
 
     //Encrypt Function
     public static void encrypt(String key, File inputFile, File outputFile)
-            throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException {
+            throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IOException {
         doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
     }
 
     //Decrypt Function
     public static void decrypt(String key, File inputFile, File outputFile)
-            throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException {
+            throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IOException {
         doCrypto(Cipher.DECRYPT_MODE, key, inputFile, outputFile);
     }
 
     //General Function
     private static void doCrypto(int cipherMode, String key, File inputFile, File outputFile)
-            throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException {
+            throws CryptoException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IOException {
         try {
             KeyPair kp;
             PublicKey pub = null;
             PrivateKey pvt = null;
+            File keyFile = new File(key);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            try {
+                if (cipherMode == Cipher.ENCRYPT_MODE && keyFile.getName().endsWith(".key")) {
+                    byte[] bytes = Files.readAllBytes(keyFile.toPath());
+                    PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
+                    pvt = kf.generatePrivate(ks);
+                } else if (cipherMode == Cipher.DECRYPT_MODE && keyFile.getName().endsWith(".pub")) {
+                    byte[] bytes = Files.readAllBytes(keyFile.toPath());
+                    X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+                    pub = kf.generatePublic(ks);
+                }
+            } catch (InvalidKeySpecException e) {
+                throw new CryptoException("Invalid Key", e);
+            }
+            /*
             File keyFolder = new File(key);
             File[] listOfFiles = keyFolder.listFiles();
-            KeyFactory kf = KeyFactory.getInstance("RSA");
             for (int i = 0; i < listOfFiles.length; i++) {
                 File file = listOfFiles[i];
                 if (file.isFile() && file.getName().endsWith(".pub")) { //read public key
@@ -76,7 +93,7 @@ public class RSA {
                     break;
                 }
             }
-
+             */
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             if (cipherMode == Cipher.ENCRYPT_MODE) {
                 cipher.init(cipherMode, pvt);
@@ -94,7 +111,6 @@ public class RSA {
 
             inputStream.close();
             outputStream.close();
-
 
         } catch (NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidKeyException | BadPaddingException
