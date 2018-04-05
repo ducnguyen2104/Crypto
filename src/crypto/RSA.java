@@ -60,11 +60,11 @@ public class RSA {
             File keyFile = new File(key);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             try {
-                if (cipherMode == Cipher.ENCRYPT_MODE && keyFile.getName().endsWith(".key")) {
+                if (cipherMode == Cipher.DECRYPT_MODE && keyFile.getName().endsWith(".key")) {
                     byte[] bytes = Files.readAllBytes(keyFile.toPath());
                     PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
                     pvt = kf.generatePrivate(ks);
-                } else if (cipherMode == Cipher.DECRYPT_MODE && keyFile.getName().endsWith(".pub")) {
+                } else if (cipherMode == Cipher.ENCRYPT_MODE && keyFile.getName().endsWith(".pub")) {
                     byte[] bytes = Files.readAllBytes(keyFile.toPath());
                     X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
                     pub = kf.generatePublic(ks);
@@ -96,9 +96,9 @@ public class RSA {
              */
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             if (cipherMode == Cipher.ENCRYPT_MODE) {
-                cipher.init(cipherMode, pvt);
-            } else {
                 cipher.init(cipherMode, pub);
+            } else {
+                cipher.init(cipherMode, pvt);
             }
             FileInputStream inputStream = new FileInputStream(inputFile);
             byte[] inputBytes = new byte[(int) inputFile.length()];
