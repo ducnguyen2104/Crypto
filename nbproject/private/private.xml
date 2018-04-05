@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/Frame1.java</file>
             <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/RSA.java</file>
             <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/DES.java</file>
             <file>file:/C:/Users/Administrator/Desktop/Crypto_Asgmt1/src/crypto/AES.java</file>
+=======
+            <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/CryptoException.java</file>
+            <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/RSA.java</file>
+            <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/Frame1.java</file>
+            <file>file:/E:/Eclipse%20workspace/Crypto/1/src/crypto/DES.java</file>
+>>>>>>> 06026ff10411ad4696a5dd72b9fb5cd5f9753290
         </group>
     </open-files>
 </project-private>

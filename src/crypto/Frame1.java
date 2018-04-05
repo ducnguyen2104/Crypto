@@ -894,17 +894,16 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClear1ActionPerformed
 
     private void btnKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey1ActionPerformed
-        if (comboCryptType1.getSelectedIndex() == 0) { //RSA
-            chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooseDirectory.showOpenDialog(null);
-        } else {
-            chooseFile.showOpenDialog(null);
-        }
+
+        chooseFile.showOpenDialog(null);
+
         try {
-            if (comboCryptType1.getSelectedIndex() == 0) {
-                key = chooseDirectory.getSelectedFile();
-            } else {
-                key = chooseFile.getSelectedFile();
+            key = chooseFile.getSelectedFile();
+            if ((radioEncrypt1.isSelected() && comboCryptType1.getSelectedIndex() == 0 && !key.getName().endsWith(".key")) 
+                    || (radioDecrypt1.isSelected() && comboCryptType1.getSelectedIndex() == 0 && !key.getName().endsWith(".pub") ) ) {
+               JOptionPane.showMessageDialog(frame, "Wrong key type!", "ERROR", JOptionPane.ERROR_MESSAGE);
+               txtKeyStatus.setText("No key file has been choosen...");
+               return;
             }
             keyPath = key.getPath();
             txtKeyPath1.setText(keyPath);
@@ -966,17 +965,17 @@ public class Frame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFile2ActionPerformed
 
     private void btnKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKey2ActionPerformed
-        if (comboCryptType2.getSelectedIndex() == 0) { //RSA
-            chooseDirectory.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooseDirectory.showOpenDialog(null);
-        } else {
-            chooseFile.showOpenDialog(null);
-        }
+
+        chooseFile.showOpenDialog(null);
+
         try {
-            if (comboCryptType2.getSelectedIndex() == 0) {
-                key = chooseDirectory.getSelectedFile();
-            } else {
-                key = chooseFile.getSelectedFile();
+
+            key = chooseFile.getSelectedFile();
+            if ((radioEncrypt2.isSelected() && comboCryptType2.getSelectedIndex() == 0 && !key.getName().endsWith(".key")) 
+                    || (radioDecrypt2.isSelected() && comboCryptType2.getSelectedIndex() == 0 && !key.getName().endsWith(".pub") ) ) {
+               JOptionPane.showMessageDialog(frame, "Wrong key type!", "ERROR", JOptionPane.ERROR_MESSAGE);
+               txtKeyStatus.setText("No key file has been choosen...");
+               return;
             }
             keyPath = key.getPath();
             txtKeyPath2.setText(keyPath);
@@ -1115,12 +1114,12 @@ public class Frame1 extends javax.swing.JFrame {
             } //Otherwise
             else if ("".equals(keyPath) && radioDecrypt1.isSelected()) {
                 JOptionPane.showMessageDialog(frame, "Please select key file/folder to decrypt!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-                if ("RSA".equals(algorithm))
+            } else {
+                if ("RSA".equals(algorithm)) {
                     key = keyPath;
-                else
+                } else {
                     key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+                }
             }
             if ("DES".equals(algorithm)) {
                 //If key.length < 8
@@ -1138,10 +1137,9 @@ public class Frame1 extends javax.swing.JFrame {
                     for (int i = 0; i < 16 - length; i++) {
                         key = "0" + key;
                     }
-                } 
-                //If key.length > 16 => take only 16 characters
+                } //If key.length > 16 => take only 16 characters
                 else if (length > 16) {
-                    key = key.substring(0,16);
+                    key = key.substring(0, 16);
                 }
             }
 
@@ -1163,11 +1161,15 @@ public class Frame1 extends javax.swing.JFrame {
                 RSA.encrypt(key, inputFile, encryptedFile);
             } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
                 Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (radioDecrypt1.isSelected() && "RSA".equals(algorithm)) {
             try {
                 RSA.decrypt(key, inputFile, decryptedFile);
             } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1226,7 +1228,7 @@ public class Frame1 extends javax.swing.JFrame {
         try {
             //If there's no key path and encrypt mode is selected
             if ("".equals(keyPath) && radioEncrypt2.isSelected()) {
-                
+
                 if ("DES".equals(algorithm)) {
                     //Auto generate key for DES
                     key = "00000000";
@@ -1266,17 +1268,16 @@ public class Frame1 extends javax.swing.JFrame {
                         out.write(kp.getPublic().getEncoded());
                     }
                 }
-            }
-            //key is required for decryption
+            } //key is required for decryption
             else if ("".equals(keyPath) && radioDecrypt2.isSelected()) {
                 JOptionPane.showMessageDialog(frame, "Please select key file/folder to decrypt!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-            //Otherwise
+            } //Otherwise
             else {
-                if ("RSA".equals(algorithm))
+                if ("RSA".equals(algorithm)) {
                     key = keyPath;
-                else
+                } else {
                     key = new Scanner(new File(keyPath)).useDelimiter("\\Z").next();
+                }
             }
             if ("DES".equals(algorithm)) {
                 //If key.length < 8
@@ -1294,10 +1295,9 @@ public class Frame1 extends javax.swing.JFrame {
                     for (int i = 0; i < 16 - length; i++) {
                         key = "0" + key;
                     }
-                }
-                //If key.length > 16 => take only 16 characters
+                } //If key.length > 16 => take only 16 characters
                 else if (length > 16) {
-                    key = key.substring(0,16);
+                    key = key.substring(0, 16);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -1315,26 +1315,34 @@ public class Frame1 extends javax.swing.JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Invalid result folder path.", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-            
+
             //Do encrypt/decrypt for RSA
             if (radioEncrypt2.isSelected() && "RSA".equals(algorithm)) {
                 try {
-                    if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key"))
+                    if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key")) {
                         RSA.encrypt(key, listOfFiles[i], encryptedFile);
-                    else continue;
+                    } else {
+                        continue;
+                    }
                 } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                    Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (radioDecrypt2.isSelected() && "RSA".equals(algorithm)) {
                 try {
-                    if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key"))
+                    if (!listOfFiles[i].getName().endsWith(".pub") && !listOfFiles[i].getName().endsWith(".key")) {
                         RSA.decrypt(key, listOfFiles[i], decryptedFile);
-                    else continue;
+                    } else {
+                        continue;
+                    }
                 } catch (CryptoException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidKeySpecException ex) {
+                    Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
                     Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
             //Do encrypt/decrypt for DES
             if (radioEncrypt2.isSelected() && "DES".equals(algorithm)) {
                 try {
@@ -1378,41 +1386,46 @@ public class Frame1 extends javax.swing.JFrame {
         jProgressBar1.setIndeterminate(true);
         jLabel5.setVisible(false);
         //Get some informations about algorithm, key and file
-        
+
         String filePath = txtOriginalFilePath.getText();
         String encryptedFilePath = txtEncryptedFilePath.getText();
-        
+
         //Read input file
         try {
-            if ("".equals(filePath)) throw new Exception();
+            if ("".equals(filePath)) {
+                throw new Exception();
+            }
             inputFile = new File(filePath);
-        } catch(Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Can't read input file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         //Done 60% progress
         //jProgressBar1.setValue(jProgressBar1.getValue()+10);
         //Read encrypted file
         try {
-            if ("".equals(encryptedFilePath)) throw new Exception();
+            if ("".equals(encryptedFilePath)) {
+                throw new Exception();
+            }
             inputFile = new File(filePath);
-        } catch(Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Can't read encrypted file.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        
+
 //        // Do hashing two files
         try {
             String fileHash = MD5.getMD5Checksum(filePath);
             String encryptedFileHash = MD5.getMD5Checksum(encryptedFilePath);
-            
-            if (fileHash.equals(encryptedFileHash))
+
+            if (fileHash.equals(encryptedFileHash)) {
                 JOptionPane.showMessageDialog(frame, "Encrypted file is the same with the original file!", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-            else
+            } else {
                 JOptionPane.showMessageDialog(frame, "Encrypted file is DIFFERENT FROM the original file!", "FAIL", JOptionPane.PLAIN_MESSAGE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-            
+
         jProgressBar1.setIndeterminate(false);
     }//GEN-LAST:event_btnStart3ActionPerformed
 
